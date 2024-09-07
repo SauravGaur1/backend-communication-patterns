@@ -1,0 +1,13 @@
+Long Polling Communication Pattern
+    To test the long polling pattern, open the UI in a single browser tab. Create a job and observe the status updates. The status should update in real-time as the server sends updates, with the UI reflecting these changes without additional requests from the client until the current request is fulfilled.
+
+Pros:
+    => Near Real-Time Updates: Provides updates with minimal delay, making it suitable for applications needing timely information.
+    => Reduced Client Overhead: Fewer requests are needed compared to short polling, reducing client-side bandwidth and processing.
+    => Easier Than WebSockets: Simplifies implementation compared to WebSockets or SSE, especially in environments where these technologies aren't supported.
+
+Cons:
+    => Resource Intensive: Requires the server to maintain many open connections, which can strain resources and impact scalability.
+    => Latency: There's still some latency due to the time taken to establish new requests after the previous one is fulfilled.
+    => Complex Error Handling: Managing errors and disconnections can complicate client-side logic and introduce additional overhead.
+    => Connection Limit: Browsers like Chrome limit the number of concurrent connections per domain (typically 6). This can restrict the number of tabs that can simultaneously use long polling for the same domain. (TRY ADDING MORE THAN 6 REQUETS AT THE SAME TIME AND OBSERVE WHAT HAPPENS IN THE UI AND NETWORK TAB).
