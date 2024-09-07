@@ -1,0 +1,12 @@
+Push Communication Pattern
+    To test the push communication pattern, open the chat UI in multiple browser tabs or different browsers. Send a message from one tab and verify that it appears in real-time in the other tabs, confirming that the server is broadcasting updates correctly to all connected clients.
+
+Pros:
+    => Real-Time Updates: Provides instantaneous data delivery, suitable for applications requiring live information like chat systems.
+    => Network Efficiency: Eliminates the need for constant polling, thus optimizing bandwidth and reducing server load.
+    => Enhanced User Engagement: Delivers immediate feedback and notifications, improving user interaction and satisfaction.
+
+Cons:
+    => Implementation Complexity: Requires additional setup and infrastructure, which can complicate the system design.
+    => Scalability Issues: Handling a high volume of concurrent connections can put a strain on server resources.
+    => Potential for Overload: Excessive notifications may lead to user fatigue if not properly managed.
