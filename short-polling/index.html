@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Status Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .job {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: #f9f9f9;
+        }
+        .job h3 {
+            margin: 0 0 10px;
+        }
+        .job .status {
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: calc(100% - 80px);
+            padding: 10px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Job Status Dashboard</h1>
+        <button onclick="createJob()">Create Job</button>
+
+        <div id="jobs-list"></div>
+    </div>
+
+    <script>
+        const jobsList = document.getElementById('jobs-list');
+        let jobs = {};
+
+        function createJob() {
+            fetch('/create', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.text())
+            .then(text => {
+                const jobId = text.split(': ')[1];
+                addJobToUI(jobId);
+            });
+        }
+
+        function addJobToUI(jobId) {
+            const jobDiv = document.createElement('div');
+            jobDiv.className = 'job';
+            jobDiv.id = `job-${jobId}`;
+
+            jobDiv.innerHTML = `
+                <h3>Job ID: ${jobId}</h3>
+                <div class="status">Status: <span id="status-${jobId}">Pending</span></div>
+            `;
+
+            jobsList.appendChild(jobDiv);
+
+            pollJobStatus(jobId);
+        }
+
+        function pollJobStatus(jobId) {
+            const statusSpan = document.getElementById(`status-${jobId}`);
+            const intervalId = setInterval(() => {
+                fetch(`/status?jobId=${jobId}`)
+                    .then(response => response.text())
+                    .then(text => {
+                        const statusMatch = text.match(/Status: (\d+)%/);
+                        if (statusMatch) {
+                            const progress = statusMatch[1];
+                            statusSpan.textContent = `${progress}%`;
+                            if (progress === '100') {
+                                clearInterval(intervalId);
+                            }
+                        } else {
+                            statusSpan.textContent = 'Error or No Job';
+                            clearInterval(intervalId);
+                        }
+                    });
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

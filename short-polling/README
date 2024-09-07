@@ -1,0 +1,13 @@
+Short Polling
+    Periodic Updates: The client regularly sends requests to the server to check for updates.
+    Simple Implementation: Easy to implement and understand, suitable for cases where real-time updates are not critical.
+
+Pros: 
+    => Simple Implementation: Easy to set up and understand, requiring only basic HTTP requests. 
+    => No Persistent Connections: Avoids the complexity of managing persistent connections, suitable for environments with limited resources. 
+    => Predictable Load: Server load is more predictable as requests are made at regular intervals.
+
+Cons:
+    => Inefficiency: Can be inefficient with frequent polling, increasing server load and network traffic. 
+    => Latency: Updates are not immediate; the interval between polls can introduce delays in receiving data. 
+    => Scalability Issues: With many clients, frequent polling can strain server resources and lead to performance bottlenecks.
