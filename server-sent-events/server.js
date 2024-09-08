@@ -1,5 +1,4 @@
 const express = require("express");
-const { createReadStream } = require("fs");
 const path = require("path");
 const app = express();
 
@@ -19,7 +18,7 @@ Cons:
 
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.get('/stream', async (req, res) => {

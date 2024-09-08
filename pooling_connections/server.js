@@ -1,12 +1,13 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 
 // KINDLY READ THE README FILE TO UNDERSTAND THIS AS ITS EXAMPLE IS SAME AS LONG_POLLING
 
 const jobs = {}
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(path.join(__dirname, 'index.html'));
 })
 
 app.post('/create', (req, res) => {
