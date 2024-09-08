@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stream Data</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        #output {
+            border: 1px solid #ccc;
+            padding: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+            white-space: pre-wrap;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Stream Data from Server</h1>
+    <button id="startStream">Start Stream</button>
+    <div id="output"></div>
+
+    <script>
+        document.getElementById('startStream').addEventListener('click', () => {
+            const output = document.getElementById('output');
+            const source = new EventSource('/stream');
+
+            source.onmessage = function(event) {
+                console.log(event);
+                output.textContent += event.data;
+            };
+
+            source.onerror = function() {
+                console.error("Stream error or completed.");
+                source.close();
+            };
+        });
+    </script>
+</body>
+</html>
