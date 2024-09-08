@@ -1,0 +1,12 @@
+Streaming with Range Requests
+    This pattern allows clients to request specific portions of a resource (e.g., a file) using range headers. The server responds by streaming only the requested parts, making it efficient for large files and scenarios requiring partial data delivery.
+
+Pros:
+    => Efficient Bandwidth Usage: Only the requested portion of the resource is sent, reducing unnecessary data transfer.
+    => Supports Partial Access: Clients can access specific parts of a resource, enabling features like seeking or resuming downloads.
+    => Scalable for Large Resources: Suitable for handling large files without overwhelming the server or client.
+
+Cons:
+    => Complex Implementation: Requires additional logic to handle range headers and serve partial content.
+    => Resource Intensive: Streaming large files can consume significant server resources, especially with many concurrent users.
+    => Latency: There might be delays in fetching and delivering specific segments, depending on network conditions.
