@@ -1,6 +1,6 @@
 In Long polling we have seen an cons that chrome opens only 6 connection at a time for a spacific domain the way it achieve this is connection pooling (I worte it a pooling_connections just because i want it to be below long-polling , LoL, thanks to auto sorting).
 
-**(TRY ADDING MORE THAN 6 REQUETS AT THE SAME TIME AND OBSERVE WHAT HAPPENS IN THE UI AND NETWORK TAB).**
+**(TRY ADDING MORE THAN 6 REQUESTS AT THE SAME TIME AND OBSERVE WHAT HAPPENS IN THE UI AND NETWORK TAB).**
 
 Connection Pooling
     Connection pooling manages and reuses a set of connections to improve performance and resource use. It’s used in various systems beyond just databases.
