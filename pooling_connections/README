@@ -1,0 +1,58 @@
+In Long polling we have seen an cons that chrome opens only 6 connection at a time for a spacific domain the way it achieve this is connection pooling (I worte it a pooling_connections just because i want it to be below long-polling , LoL, thanks to auto sorting).
+
+**(TRY ADDING MORE THAN 6 REQUETS AT THE SAME TIME AND OBSERVE WHAT HAPPENS IN THE UI AND NETWORK TAB).**
+
+Connection Pooling
+    Connection pooling manages and reuses a set of connections to improve performance and resource use. It’s used in various systems beyond just databases.
+
+Pros:
+    => Improved Performance: Reduces the overhead of creating and destroying connections.
+    => Resource Use: Limits the number of active connections, optimizing system resources.
+    => Enhanced Scalability: Supports more concurrent requests by reusing existing connections.
+
+Cons:
+    => Complex Configuration: Requires tuning and management of pool size and settings.
+    => Potential Connection Leaks: Mismanagement can lead to connections not being returned to the pool.
+    => Overhead: Pool management adds some overhead, which can affect performance if not optimized.
+
+
+**CONNECTION POOLING EXAMPLE IN TERMS OF DATABASE, IT IS TAKEN FROM MOVIE_PLATFROM_BACKEND REPO DO CHECK THAT OUT IF YOU WANT TO LOOK INTO THIS FURTHER**
+
+const Sequelize = require('sequelize');
+const dbConfig = require('../config/config.js').db.development;
+
+class DataBase {
+    connection;
+     constructor() {
+
+         this.connection =  new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, {
+             host: dbConfig.host,
+             dialect: dbConfig.dialect,
+             port: dbConfig.port,
+             logging: false,
+             pool: {
+                max: dbConfig.dbMaxConnection,
+                min: dbConfig.dbMinConnection,
+                acquire: dbConfig.dbAcquireTimeout,
+                idle: dbConfig.dbIdleTimeout,Efficient
+            },
+            dialectOptions: {
+                connectTimeout: dbConfig.dbConnectionTimeout,
+            },
+         },);
+     }
+
+     connect = async () =>
+    {
+        try{
+            await this.connection.authenticate();
+            console.log("Connected to Database");
+        } catch (e){
+            console.log("Unable To connect to database" + e.message);
+        }
+    }
+}
+database = new DataBase();
+sequelize = database.connection;
+
+module.exports = {database,sequelize} ;
